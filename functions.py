@@ -37,6 +37,5 @@ def print_result(res):
     heads = ['Название: ', 'Жанр: ', 'Год выпуска: ', 'Рейтинг: ']
     print(heads[0].center(50), heads[1].center(50), heads[2].center(20), heads[3].center(20))
     for row in res:
-        ganer = str(row[1]).replace('}','').replace('{','')
-        print(row[0].ljust(50), ganer.center(50), str(row[2]).center(20), str(row[3]).center(20))
+        print(row[0].ljust(50), (str(row[1]).strip('{}')).center(50), str(row[2]).center(20), str(row[3]).center(20))
 
