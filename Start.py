@@ -26,7 +26,8 @@ while True:
             print(f"Вы выбрали - {gener}")
             result = functions.search_genres(gener)
             functions.print_result(result)
-            print("Action completed ", "\n")
+            print("")
+#            print("Action completed ", "\n")
         case "2":
 #            dbconnect = DbSql()
 #            search_year

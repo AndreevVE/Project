@@ -35,18 +35,8 @@ def search_genres(ganer):
 
 def print_result(res):
     heads = ['Название: ', 'Жанр: ', 'Год выпуска: ', 'Рейтинг: ']
-#    print(heads[0].center(10), heads[1].center(20), heads[2].center(10), heads[3].center(10)
+    print(heads[0].center(50), heads[1].center(50), heads[2].center(20), heads[3].center(20))
     for row in res:
-        i = 0
-        for word in row:
-            if i == 1:
-                print(heads[i],end='')
-                i += 1
-                for ganer in word:
-                    print(ganer, " ", end='')
-                print("")
-            else:
-                print(heads[i],word,sep='')
-                i += 1
-        print("=======================")
+        ganer = str(row[1]).replace('}','').replace('{','')
+        print(row[0].ljust(50), ganer.center(50), str(row[2]).center(20), str(row[3]).center(20))
 
