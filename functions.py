@@ -62,13 +62,21 @@ def search_key_words_title(key_words):
     sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `title`\
              REGEXP  '{key_words}' OR `plot` REGEXP '{key_words}' OR `cast` REGEXP '{key_words}'\
              ORDER BY `imdb.rating` DESC LIMIT 10")
-    print(sql_date)
     dbconnect = MyClassDB.DbSql()
     result = dbconnect.other_select(sql_date)
     if result == 0:
         print("К сожалению по вашему запросу фильмов не нашли.")
         return 1
     return result
+
+
+def insert_db(words):
+    dbconnect = MyClassDB.DbSql()
+    for word in words:
+        dbconnect.insert(word)
+
+
+
 
 
 def print_result(res):

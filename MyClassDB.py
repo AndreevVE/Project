@@ -9,9 +9,6 @@ class DbSql:
                'port': '6033',
                'password': 'passw',
                'database': 'movies'}
-    db_tables = {"users": ["id", "name", "age"],
-                 "product": ["pid", "prod", "quantity"],
-                 "sales": ["sid", "pid", "id"]}
 
     def __init__(self):
         try:
@@ -35,6 +32,17 @@ class DbSql:
             return 1
         rows = self.cursor.fetchall()
         return rows
+
+    def insert(self, arg):
+        sql_date_ins = 'INSERT INTO keyword_tab (`keywords`) VALUES (%s)'
+        ins_key_word = []
+        ins_key_word.append(arg)
+        try:
+            self.cursor.execute(sql_date_ins, ins_key_word)
+            self.connection.commit()
+        except mysql.connector.Error as e:
+            print(f"Connection Error:{e}")
+            return 1
 
     def __del__(self):
         self.connection.close()

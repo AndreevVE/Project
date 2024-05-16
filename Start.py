@@ -23,6 +23,9 @@ while True:
             functions.get_list_genres()
             genre = input("\n Выберите жанр: ")
             print(f"Вы выбрали - {genre}")
+            key = []
+            key.append(genre)
+            functions.insert_db(key)
             choice = input("Выбрать год выпуска фильма? Y,N :")
             year = ()
             if choice == 'Y'or choice == 'y':
@@ -52,6 +55,9 @@ while True:
         case "3":
             key_words = input("Введите слова для поиска через пробел: ")
             result = functions.search_key_words_title(key_words)
+            ins_word = []
+            ins_word.append(key_words.split())
+            functions.insert_db(*ins_word)
             spisok_id = functions.print_result(result)
             functions.search_id(spisok_id)
             print("\n")
