@@ -28,21 +28,14 @@ class DbSql:
         return rows
 
     def other_select(self, request):
-        self.cursor.execute(request)
+        try:
+            self.cursor.execute(request)
+        except mysql.connector.Error as e:
+            print(f"Connection Error:{e}")
+            return 1
         rows = self.cursor.fetchall()
         return rows
 
     def __del__(self):
         self.connection.close()
 
-
-dbconnect = DbSql()
-sql_data_show = "SELECT title, year, `imdb.rating` FROM movies WHERE plot LIKE '%friend%' \
-                 ORDER BY `imdb.rating` DESC LIMIT 10"
-sql_data_show2 = "SELECT count(*) FROM movies"
-sql_data_show3 = "SELECT DISTINCT `genres`FROM movies"
-sql_data_show4 = "SELECT * FROM movies"
-result = dbconnect.other_select(sql_data_show4)
-
-#for row in result:
-#     print(row)
