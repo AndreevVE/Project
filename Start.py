@@ -22,12 +22,23 @@ while True:
             break
         case "1":
             functions.get_list_genres()
-            gener = input("\n Выберите жанр: ").strip()
+            gener = input("\n Выберите жанр: ")
             print(f"Вы выбрали - {gener}")
-            result = functions.search_genres(gener)
-            functions.print_result(result)
+            choice = input("Выбрать год выпуска фильма? Y,N :")
+            year = ()
+            if choice == 'Y'or choice == 'y':
+                year = input("Введите год(ы) через пробел: ").split()
+                result = functions.search_genres(gener,*year)
+            else:
+                result = functions.search_genres(gener,*year)
+            spisok_id = functions.print_result(result)
             print("")
-#            print("Action completed ", "\n")
+            key = 0
+            key = int(input("Хотите посмотреть описания фильма, введите номер из спискаю: "))
+            if key != 0:
+                id = spisok_id.get(key)
+                result = functions.search_id(id)
+            print("\n")
         case "2":
 #            dbconnect = DbSql()
 #            search_year
