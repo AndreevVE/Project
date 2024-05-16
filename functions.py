@@ -1,5 +1,5 @@
 import Test_progect
-
+import re
 
 def get_list_genres ():
     dbconnect = Test_progect.DbSql()
@@ -26,38 +26,51 @@ def get_list_genres ():
             j += 4
 
 
-def search_genres(ganer,*year):
+def search_genres(genre,*year):
     if len(year) == 0:
         sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `genres`\
-                LIKE '%{ganer}%' ORDER BY `imdb.rating` DESC LIMIT 10")
+        LIKE '%{genre}%' ORDER BY `imdb.rating` DESC LIMIT 10")
     elif len(year) == 1:
         sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `genres`\
-                        LIKE '%{ganer}%' AND `year`={year[0]} ORDER BY `imdb.rating` DESC LIMIT 10")
+        LIKE '%{genre}%' AND `year`={year[0]} ORDER BY `imdb.rating` DESC LIMIT 10")
     else:
         sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `genres`\
-                LIKE '%{ganer}%' AND `year` IN {year} ORDER BY `imdb.rating` DESC LIMIT 10")
+        LIKE '%{genre}%' AND `year` IN {year} ORDER BY `imdb.rating` DESC LIMIT 10")
     dbconnect = Test_progect.DbSql()
     result = dbconnect.other_select(sql_date)
     return result
 
 
-def search_id(id):
-    sql_date = (f"SELECT `title`, `plot` FROM movies WHERE id={id}")
+def search_id(spisok_id):
+    key = input("Хотите посмотреть описания фильма, введите номер из списка: ")
+    if re.match("\d+", key):
+        id = spisok_id.get(int(key))
+        sql_date = (f"SELECT `title`, cast, `plot`, runtime FROM movies WHERE id={id}")
+        dbconnect = Test_progect.DbSql()
+        result = dbconnect.other_select(sql_date)
+        for row in result:
+            print(f"Название: {row[0]}\nАктеры: {row[1].strip('[]')}\nОписание:\n"
+                  f"{row[2]}\nПродолжительность: {row[3]} мин")
+
+
+def search_key_words_title(key_words):
+    key_words = str(key_words).replace(" ", " | ")
+    sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `title` REGEXP\
+             '{key_words}' ORDER BY `imdb.rating` DESC LIMIT 10")
+
     dbconnect = Test_progect.DbSql()
     result = dbconnect.other_select(sql_date)
-    for row in result:
-        print(row[0])
-        print(row[1])
-#    print(str(result[0]).strip("()"),"\t", str(result[1]).strip("()"))
+    return result
 
 
 def print_result(res):
     heads = ['Название: ', 'Жанр: ', 'Год выпуска: ', 'Рейтинг: ']
-    print(heads[0].center(58), heads[1].center(53), heads[2].center(20), heads[3].center(20))
+    print(heads[0].center(62), heads[1].center(53), heads[2].center(20), heads[3].center(20))
     i = 1
     spisok = {}
     for row in res:
-        print(str(i).rjust(2), row[1].ljust(55), (str(row[2]).strip("{}")).center(51), str(row[3]).center(20), str(row[4]).center(20))
+        print(str(i).rjust(2), row[1].ljust(62), (str(row[2]).strip("{}")).center(51),\
+              str(row[3]).center(20), str(row[4]).center(20))
         spisok[i] = row[0]
         i += 1
 #    print(spisok)
