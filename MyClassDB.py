@@ -35,8 +35,7 @@ class DbSql:
 
     def insert(self, arg):
         sql_date_ins = 'INSERT INTO keyword_tab (`keywords`) VALUES (%s)'
-        ins_key_word = []
-        ins_key_word.append(arg)
+        ins_key_word = [arg]
         try:
             self.cursor.execute(sql_date_ins, ins_key_word)
             self.connection.commit()
@@ -46,4 +45,3 @@ class DbSql:
 
     def __del__(self):
         self.connection.close()
-
