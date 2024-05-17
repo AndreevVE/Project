@@ -70,6 +70,15 @@ def search_key_words_title(key_words):
         return 1
     return result
 
+def top_words():
+    dbconnect = MyClassDB.DbSql()
+    sql_data = f"SELECT `keywords` FROM keyword_tab GROUP BY `keywords` ORDER BY count(*) DESC   LIMIT 10"
+    result = dbconnect.other_select(sql_data)
+    top_word = []
+    for word in result:
+        top_word = top_word +list(word)
+    return top_word
+
 
 def insert_db(words):
     dbconnect = MyClassDB.DbSql()

@@ -52,6 +52,9 @@ while True:
                 continue
             print("\n")
         case "3":
+            top_words = functions.top_words()
+            print(f"Для поиска можете воспользоватся списком из топ 10:\n{' '.join(top_words)}\n"
+                  f" или введите свои слова.")
             key_words = input("Введите слова для поиска через пробел: ")
             result = functions.search_key_words_title(key_words)
             ins_word = [key_words.split()]
@@ -60,6 +63,8 @@ while True:
             functions.search_id(spisok_id)
             print("\n")
         case "4":
+            words = functions.top_words()
+            print(' '.join(words))
             print("\n")
         case _default:
             break
