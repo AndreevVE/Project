@@ -25,9 +25,9 @@ while True:
             print(f"Вы выбрали - {genre}")
             save_list = [genre]
             functions.insert_db(save_list)
-            choice = input("Выбрать год выпуска фильма? Y,N :")
+            choice = input("Выбрать год выпуска фильма? Y,N :").lower()
             year = ()
-            if choice == 'Y' or choice == 'y':
+            if choice == 'y':
                 year = input("Введите год(ы) через пробел: ").split()
                 result = functions.search_genres_years(genre, *year)
             else:

@@ -46,7 +46,7 @@ def search_genres_years(genre, *year):
 
 def search_id(spisok_id):
     key = input("Хотите посмотреть описания фильма, введите номер из списка: ")
-    if re.match("\d+", key):
+    if re.match("\d+", key) and int(key) <= 10:
         date_id = spisok_id.get(int(key))
         sql_date = f"SELECT `title`, cast, `plot`, runtime FROM movies WHERE id={date_id}"
         dbconnect = MyClassDB.DbSql()
@@ -54,8 +54,13 @@ def search_id(spisok_id):
         for row in result:
             print(f"Название: {row[0]}\nАктеры: {row[1].strip('[]')}\nОписание:\n"
                   f"{row[2]}\nПродолжительность: {row[3]} мин")
+        next_key = input ("Хотите продолжить? Y, N ").lower()
+        if next_key == "y":
+            return (search_id(spisok_id))
+        return
     else:
-        print("Ошибка! Неверный ID")
+        print("Ошибка! Неверный номер. ")
+        return (search_id(spisok_id))
 
 
 def search_key_words_title(key_words):
