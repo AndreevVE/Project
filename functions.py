@@ -64,10 +64,11 @@ def search_id(spisok_id):                                            # поис�
 
 
 def search_key_words_title(key_words):                                 # поиск по ключевым словам
-    key_words = str(key_words).replace(" ", " | ")                     
+    key_words = str(key_words).replace(" ", " | ")
+    # поиск ключевого слова в разных полях
     sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `title`\
-             REGEXP  '{key_words}' OR `plot` REGEXP '{key_words}' OR `cast` REGEXP '{key_words}'\ 
-             ORDER BY `imdb.rating` DESC LIMIT 10")                    # поиск ключевого слова в разных полях
+             REGEXP  '{key_words}' OR `plot` REGEXP '{key_words}' OR `cast` REGEXP '{key_words}'\
+                          ORDER BY `imdb.rating` DESC LIMIT 10")
     dbconnect = MyClassDB.DbSql()
     result = dbconnect.other_select(sql_date)
     if result == 0:
