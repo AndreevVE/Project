@@ -1,8 +1,8 @@
 import sys
 import mysql.connector
 
-
-class DbSql:
+# класс для работы с базой sql
+class DbSql:                                                        
     db_conf = {'host':
                '192.168.1.3',
                'user': 'root',
@@ -15,7 +15,7 @@ class DbSql:
             self.connection = mysql.connector.connect(**DbSql.db_conf)
             self.cursor = self.connection.cursor()
         except mysql.connector.Error as e:
-            print(f"Connection Error:{e}")
+            print(f"Connection Error:{e}")                   # обработка ошибки несоединения
             sys.exit(1)
 
     def select_table(self, table):
@@ -24,7 +24,7 @@ class DbSql:
         rows = self.cursor.fetchall()
         return rows
 
-    def other_select(self, request):
+    def other_select(self, request):                         # передача запроса в базу и получение ответа
         try:
             self.cursor.execute(request)
         except mysql.connector.Error as e:
@@ -33,7 +33,7 @@ class DbSql:
         rows = self.cursor.fetchall()
         return rows
 
-    def insert(self, arg):
+    def insert(self, arg):                                   # сохранение параметров запросов в таблицу
         sql_date_ins = 'INSERT INTO keyword_tab (`keywords`) VALUES (%s)'
         ins_key_word = [arg]
         try:
