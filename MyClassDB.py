@@ -4,7 +4,6 @@ import mysql.connector
 
 class DbSql:
     db_conf = {'host':
-#               '172.17.0.1',
                '192.168.1.3',
                'user': 'root',
                'port': '6033',

@@ -1,12 +1,15 @@
 import MyClassDB
 import re
 
+import functions
+
 
 def get_list_genres():
     dbconnect = MyClassDB.DbSql()
     sql_data_show3 = "SELECT DISTINCT `genres` FROM movies"
     result = dbconnect.other_select(sql_data_show3)
     genres = []
+    genres_old = []
     for row in result:
         genres_old = []
         for word in row:
@@ -45,22 +48,21 @@ def search_genres_years(genre, *year):
 
 
 def search_id(spisok_id):
-    key = input("Хотите посмотреть описания фильма, введите номер из списка: ")
-    if re.match("\d+", key) and int(key) <= 10:
-        date_id = spisok_id.get(int(key))
-        sql_date = f"SELECT `title`, cast, `plot`, runtime FROM movies WHERE id={date_id}"
-        dbconnect = MyClassDB.DbSql()
-        result = dbconnect.other_select(sql_date)
-        for row in result:
-            print(f"Название: {row[0]}\nАктеры: {row[1].strip('[]')}\nОписание:\n"
-                  f"{row[2]}\nПродолжительность: {row[3]} мин")
-        next_key = input ("Хотите продолжить? Y, N ").lower()
-        if next_key == "y":
-            return (search_id(spisok_id))
-        return
-    else:
-        print("Ошибка! Неверный номер. ")
-        return (search_id(spisok_id))
+    key = ''
+    while key.lower() != "n":
+        key = input("Хотите посмотреть описания фильма, введите номер из списка или N: ")
+        if re.match("\d+", key) and int(key) <= 10:
+            date_id = spisok_id.get(int(key))
+            sql_date = f"SELECT `title`, cast, `plot`, runtime FROM movies WHERE id={date_id}"
+            dbconnect = MyClassDB.DbSql()
+            result = dbconnect.other_select(sql_date)
+            for row in result:
+                print(f"Название: {row[0]}\nАктеры: {row[1].strip('[]')}\nОписание:\n"
+                      f"{row[2]}\nПродолжительность: {row[3]} мин")
+        else:
+            print("Ошибка! Неверный номер. Для завершения введите N ")
+        continue
+
 
 
 def search_key_words_title(key_words):
