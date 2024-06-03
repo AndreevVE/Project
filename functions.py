@@ -31,6 +31,7 @@ def get_list_genres():                                               # функ�
 
 
 def search_genres_years(genre, *year):                                 # функция поиска по жанру и году
+    genre = str(genre).replace(" ","%")
     if len(year) == 0:
         plus_year = ""
     elif len(year) == 1:
