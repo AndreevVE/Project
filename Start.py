@@ -57,6 +57,8 @@ while True:
                   f" или введите свои слова.")
             key_words = input("Введите слова для поиска через пробел: ")
             result = functions.search_key_words_title(key_words)
+            if result == 1:                                                      # ничего не найдено, повтор главного меню
+                continue
             ins_word = [key_words.split()]
             functions.insert_db(*ins_word)                                          # пополнение таблицы запросов
             spisok_id = functions.print_result(result)

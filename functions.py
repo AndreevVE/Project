@@ -33,13 +33,15 @@ def get_list_genres():                                               # функ�
 def search_genres_years(genre, *year):                                 # функция поиска по жанру и году
     if len(year) == 0:
         plus_year = ""
+    elif len(year) == 1:
+        plus_year = f"AND year={year[0]}"
     else:
         plus_year = f"AND year IN {year}"
     sql_date = (f"SELECT id, title, `genres`, year, `imdb.rating` FROM movies WHERE `genres`\
     LIKE '%{genre}%' {plus_year} ORDER BY `imdb.rating` DESC LIMIT 10")
     dbconnect = MyClassDB.DbSql()
     result = dbconnect.other_select(sql_date)
-    if result == 0 or result == 1:
+    if len(result) == 0 or result == 1:
         print("К сожалению, по вашему запросу фильмов не нашлось.")
         return 1
     return result
@@ -71,7 +73,7 @@ def search_key_words_title(key_words):                                 # пои�
                           ORDER BY `imdb.rating` DESC LIMIT 10")
     dbconnect = MyClassDB.DbSql()
     result = dbconnect.other_select(sql_date)
-    if result == 0:
+    if len(result) == 0:
         print("К сожалению, по вашему запросу фильмов не нашлось.")
         return 1
     return result
